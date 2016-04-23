@@ -30,8 +30,8 @@ def part_one(s):
     and so his directions are a little off, and Santa ends up visiting some
     houses more than once. How many houses receive at least one present?
     '''
-    visited = {(0, 0)}
     santa_position = (0, 0)
+    visited = {santa_position}
     for c in s:
         santa_position = new_position(santa_position, c)
         visited.add(santa_position)
@@ -50,9 +50,9 @@ def part_two(s):
 
     This year, how many houses receive at least one present?
     '''
-    visited = {(0, 0)}
     santa_position = (0, 0)
     robo_position = (0, 0)
+    visited = {santa_position, robo_position}
     for santa_c, robo_c in zip(s[::2], s[1::2]):
         santa_position = new_position(santa_position, santa_c)
         robo_position = new_position(robo_position, robo_c)
