@@ -11,11 +11,9 @@ DIRECTIONS = {
 }
 
 
-def updated_position(c, position, visited):
+def new_position(position, c):
     d = DIRECTIONS[c]
-    new_position = position[0] + d[0], position[1] + d[1]
-    visited.add(new_position)
-    return new_position
+    return position[0] + d[0], position[1] + d[1]
 
 
 def part_one(s):
@@ -35,7 +33,8 @@ def part_one(s):
     visited = {(0, 0)}
     santa_position = (0, 0)
     for c in s:
-        santa_position = updated_position(c, santa_position, visited)
+        santa_position = new_position(santa_position, c)
+        visited.add(santa_position)
     return len(visited)
 
 
@@ -55,10 +54,11 @@ def part_two(s):
     santa_position = (0, 0)
     robo_position = (0, 0)
     for santa_c, robo_c in zip(s[::2], s[1::2]):
-        santa_position = updated_position(santa_c, santa_position, visited)
-        robo_position = updated_position(robo_c, robo_position, visited)
+        santa_position = new_position(santa_position, santa_c)
+        robo_position = new_position(robo_position, robo_c)
+        visited.update({santa_position, robo_position})
     if len(s) % 2:
-        updated_position(s[-1], santa_position, visited)
+        visited.add(new_position(santa_position, s[-1]))
     return len(visited)
 
 
@@ -70,6 +70,7 @@ def main():
     assert part_two('^v') == 3
     assert part_two('^>v<') == 3
     assert part_two('^v^v^v^v^v') == 11
+    assert part_two('^') == 2
 
     with open('input/day03.txt') as f:
         s = f.read().strip()
