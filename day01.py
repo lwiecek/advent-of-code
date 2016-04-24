@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 ###
 # Day 1 - adventofcode.com
 # Lukasz Wiecek 2015-2016
